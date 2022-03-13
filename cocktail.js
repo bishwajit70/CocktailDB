@@ -5,15 +5,13 @@ const getAllDrinks = () =>{
       const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputValue}`
       fetch(url)
       .then(res =>res.json())
-      .then(data => showDrinks(data))
+      .then(data => showDrinks(data.drinks))
 }
 // getAllDrinks()
 const showDrinks = drinks =>{
       document.getElementById('input-value').value = "";
-      console.log(drinks.drinks)
-      const items = drinks.drinks;
-      for (const drink of items) {
-            // console.log(drink.strDrinkThumb)
+      console.log(drinks);
+      for (const drink of drinks) {
             const mainDiv = document.getElementById('main');
             const div = document.createElement('div');
             div.classList.add('col-md-3');
@@ -23,9 +21,9 @@ const showDrinks = drinks =>{
                   <img src="${drink.strDrinkThumb}" class="card-img-top" alt="...">
                   <div class="card-body">
                         <h5 class="card-title">${drink.strDrink}</h5>
-                        <p class="card-text">${drink.strInstructionsIT.slice(0, 100)}</p>
+                        <p class="card-text">${drink.strInstructionsIT.slice(0, 30)}</p>
                         <p>${drink.idDrink}</p>
-                        <a href="#" class="btn btn-primary">See Details</a>
+                        <a href="#" class="btn btn-primary" onclick="getDrinkId(${drink.idDrink})">See Details</a>
                   </div>
             </div> 
             `;
@@ -33,6 +31,15 @@ const showDrinks = drinks =>{
       }  
 }
 
-const showDetails = idDrink =>{
-      
+const getDrinkId = (idDrink) =>{
+      console.log(idDrink);
+      const url = `www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
+      console.log(url);
+      fetch(url)
+      .then(res =>res.json())
+      .then(data => detailDrink(data))
+}
+
+const detailDrink =(data)=>{
+      console.log(data);
 }
